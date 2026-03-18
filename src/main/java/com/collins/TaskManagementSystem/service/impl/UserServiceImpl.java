@@ -1,14 +1,11 @@
 package com.collins.TaskManagementSystem.service.impl;
 
 import com.collins.TaskManagementSystem.dto.Request.UserRequest;
-import com.collins.TaskManagementSystem.dto.Response.TaskResponse;
 import com.collins.TaskManagementSystem.dto.Response.UserResponse;
 import com.collins.TaskManagementSystem.dto.ResponseDto;
-import com.collins.TaskManagementSystem.entity.Task;
 import com.collins.TaskManagementSystem.entity.Users;
 import com.collins.TaskManagementSystem.exception.ResourceNotFoundException;
 import com.collins.TaskManagementSystem.exception.UserAlreadyExistException;
-import com.collins.TaskManagementSystem.mapper.TaskMapper;
 import com.collins.TaskManagementSystem.mapper.UserMapper;
 import com.collins.TaskManagementSystem.repository.UserRepository;
 import com.collins.TaskManagementSystem.service.UserService;
@@ -18,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
