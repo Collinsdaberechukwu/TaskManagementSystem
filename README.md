@@ -55,14 +55,14 @@ Installation
 
 Clone the repository:
 
-git clone https://github.com/yourusername/task-management-system.git
+git clone https://github.com/Collinsdaberechukwu/TaskManagementSystem
 cd task-management-system
 
 Configure the database in application.yml:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/taskdb
+    url: jdbc:h2://localhost:3306/taskdb
     username: root
     password: password
   jpa:
