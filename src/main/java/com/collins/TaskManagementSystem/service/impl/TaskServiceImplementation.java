@@ -1,5 +1,7 @@
 package com.collins.TaskManagementSystem.service.impl;
 
+import com.collins.TaskManagementSystem.Event.TasksCreatedEvent;
+import com.collins.TaskManagementSystem.Event.UpdateTaskStatusCreatedEvent;
 import com.collins.TaskManagementSystem.dto.Request.TaskCreationRequest;
 import com.collins.TaskManagementSystem.dto.Response.TaskResponse;
 import com.collins.TaskManagementSystem.dto.ResponseDto;
@@ -13,6 +15,7 @@ import com.collins.TaskManagementSystem.repository.TaskRepository;
 import com.collins.TaskManagementSystem.service.TaskService;
 import com.collins.TaskManagementSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ public class TaskServiceImplementation implements TaskService {
 
     private final TaskRepository taskRepository;
     private final UserService userService;
+    private final ApplicationEventPublisher publisher;
 
 
 
@@ -55,6 +59,7 @@ public class TaskServiceImplementation implements TaskService {
 
 
         Task saved = taskRepository.save(task);
+        publisher.publishEvent(new TasksCreatedEvent(saved));
 
 
         TaskResponse taskResponse = TaskMapper.mapToTaskResponse(saved);
@@ -90,6 +95,7 @@ public class TaskServiceImplementation implements TaskService {
 
 
         Task updatedTask = taskRepository.save(task);
+        publisher.publishEvent(new UpdateTaskStatusCreatedEvent(updatedTask));
 
 
         TaskResponse taskResponse = TaskMapper.mapToTaskResponse(updatedTask);

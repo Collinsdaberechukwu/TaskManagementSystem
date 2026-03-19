@@ -1,5 +1,6 @@
 package com.collins.TaskManagementSystem.service.impl;
 
+import com.collins.TaskManagementSystem.Event.UserCreatedEvent;
 import com.collins.TaskManagementSystem.dto.Request.UserRequest;
 import com.collins.TaskManagementSystem.dto.Response.UserResponse;
 import com.collins.TaskManagementSystem.dto.ResponseDto;
@@ -10,6 +11,7 @@ import com.collins.TaskManagementSystem.mapper.UserMapper;
 import com.collins.TaskManagementSystem.repository.UserRepository;
 import com.collins.TaskManagementSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.Locale;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public ResponseEntity<ResponseDto<UserResponse>> createUser(UserRequest request) {
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         Users savedUser = userRepository.save(user);
+        publisher.publishEvent(new UserCreatedEvent(savedUser));
 
         UserResponse response = UserResponse.builder()
                 .id(savedUser.getId())
